@@ -67,18 +67,285 @@
     .member-link:hover .member-name {
       color: rgb(243, 244, 246);
     }
+    .progress-track {
+      background: rgba(63, 63, 70, 0.6);
+      height: 4px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, rgba(148, 163, 184, 0.9), rgba(203, 213, 225, 0.95));
+      border-radius: 2px;
+      transition: width 0.15s ease-out;
+    }
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 2px;
+      background: rgba(63, 63, 70, 0.7);
+      outline: none;
+    }
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(203, 213, 225, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 12px rgba(148, 163, 184, 0.4);
+    }
+    .volume-slider::-moz-range-thumb {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(203, 213, 225, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    }
+    .player-btn {
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+    }
+    .player-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 8px rgba(148, 163, 184, 0.15);
+    }
+    .player-btn:active {
+      transform: scale(0.98);
+    }
+    /* Linux desktop: wallpaper when dashboard is visible */
+    body.taskbar-visible {
+      background: #1e1e2e;
+      background-image: url('media/9DdOYPd-ubuntu-dark-wallpaper.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    body.taskbar-visible::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.35) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body.taskbar-visible > main { position: relative; z-index: 2; }
+
+    /* Cursor-following glow on desktop background */
+    #desktop-glow {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(
+        circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(148, 163, 184, 0.14) 0%,
+        rgba(148, 163, 184, 0.05) 35%,
+        transparent 65%
+      );
+      transition: opacity 0.15s ease;
+    }
+    body.taskbar-visible #desktop-glow { display: block; }
+
+    .dashboard-info-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(113, 113, 122, 0.5);
+      background: rgba(10, 10, 12, 0.9);
+      color: rgba(212, 212, 216, 0.9);
+      font-family: 'Minecraft', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .dashboard-info-btn:hover {
+      border-color: rgba(161, 161, 170, 0.6);
+      color: #e4e4e7;
+    }
+    .dashboard-info-btn:active {
+      border-color: rgba(113, 113, 122, 0.4);
+      color: rgba(212, 212, 216, 0.8);
+    }
+
+    /* Crew info overlay: when open, hide dashboard and show panel centered */
+    body.info-overlay-open main#mainContent {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #crew-facts-panel {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9100;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: rgba(5, 5, 6, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-family: 'Minecraft', ui-monospace, sans-serif;
+    }
+    #crew-facts-panel.open {
+      display: flex;
+    }
+    #crew-facts-panel .crew-facts-card {
+      width: min(560px, 92vw);
+      max-height: calc(100vh - 3rem);
+      background: #0a0a0c;
+      border: 1px solid rgba(63, 63, 70, 0.6);
+      border-radius: 10px;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .crew-facts-titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 0 18px 0 20px;
+      background: rgba(24, 24, 27, 0.95);
+      border-bottom: 1px solid rgba(63, 63, 70, 0.5);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: rgba(212, 212, 216, 0.95);
+    }
+    .crew-facts-close {
+      width: 28px;
+      height: 28px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: rgba(161, 161, 170, 0.9);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .crew-facts-close:hover {
+      background: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+    .crew-facts-body {
+      padding: 20px 22px 22px;
+      max-height: 70vh;
+      overflow-y: auto;
+      font-size: 15px;
+    }
+    .crew-fact-item {
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      background: rgba(24, 24, 27, 0.85);
+      border: 1px solid rgba(63, 63, 70, 0.4);
+      border-radius: 6px;
+      cursor: default;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .crew-facts-card.ready .crew-fact-item {
+      animation: crewFactIn 0.35s ease forwards;
+    }
+    .crew-fact-item:nth-child(1) { animation-delay: 0.05s; }
+    .crew-fact-item:nth-child(2) { animation-delay: 0.12s; }
+    .crew-fact-item:nth-child(3) { animation-delay: 0.19s; }
+    .crew-fact-item:nth-child(4) { animation-delay: 0.26s; }
+    @keyframes crewFactIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .crew-fact-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(113, 113, 122, 0.6);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+    .crew-fact-item:last-child { margin-bottom: 0; }
+    .crew-fact-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: rgba(205, 214, 244, 0.95);
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .crew-fact-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.9;
+    }
+    .crew-fact-tag.eth { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
+    .crew-fact-tag.sol { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+    .crew-fact-tag.xmr { background: rgba(251, 146, 60, 0.2); color: #fb923c; }
+    .crew-fact-tag.btc { background: rgba(234, 179, 8, 0.2); color: #facc15; }
+    .crew-fact-text {
+      font-size: 15px;
+      color: rgba(212, 212, 216, 0.95);
+      line-height: 1.55;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 text-zinc-100 bg-[#050506] font-['Minecraft',sans-serif]">
   <div id="custom-cursor" aria-hidden="true"></div>
   <div id="cursor-trail" aria-hidden="true"></div>
   <div id="intro" class="fixed inset-0 flex flex-col items-center justify-center bg-[#050506] text-zinc-100 z-[10000]">
+    <img src="media/SEEX.png" alt="SSEX" class="w-72 md:w-96 h-auto mb-6" />
     <h1 class="text-4xl md:text-6xl font-bold tracking-[0.35em] mb-4 ssex-floating">#S$EX</h1>
     <button id="enterButton" class="px-10 py-3 rounded-full border border-zinc-500/70 bg-zinc-900/70 text-xs md:text-sm tracking-[0.25em] uppercase hover:bg-zinc-800/90 hover:scale-105 hover:-translate-y-0.5 transition-all duration-200 shadow-[0_0_30px_rgba(15,23,42,0.8)]">
       Enter
     </button>
     <p class="mt-3 text-[11px] text-zinc-500 tracking-wide">click to enter</p>
   </div>
+
+  <div id="desktop-glow" aria-hidden="true"></div>
+  <div id="crew-facts-panel" role="dialog" aria-label="Crew facts" aria-hidden="true">
+    <div class="crew-facts-card">
+    <div class="crew-facts-titlebar">
+      <span>Crew — About</span>
+      <button type="button" class="crew-facts-close" id="crew-facts-close" aria-label="Close">×</button>
+    </div>
+    <div class="crew-facts-body">
+      <div class="crew-fact-item">
+        <div class="crew-fact-name">$WAG <span class="crew-fact-tag eth">ETH</span></div>
+        <div class="crew-fact-text">Loves money and risky shit. The $ in his name is a warning. ETH only — the rest "isn't real money." Has made and lost the same stack three times. No regrets. Okay, some regrets.</div>
+      </div>
+      <div class="crew-fact-item">
+        <div class="crew-fact-name">SLADE <span class="crew-fact-tag sol">SOL</span></div>
+        <div class="crew-fact-text">Obsessed with watches. Can't afford one yet. His SOL bags are the down payment on a Rolex. Says "slade" instead of "smooth" and we still don't get it. One day.</div>
+      </div>
+      <div class="crew-fact-item">
+        <div class="crew-fact-name">ENEMY <span class="crew-fact-tag xmr">XMR</span></div>
+        <div class="crew-fact-text">XMR maxi. Privacy is a human right; his search history is a national secret. Called Enemy because he disagreed with someone. Once. In 2019.</div>
+      </div>
+      <div class="crew-fact-item">
+        <div class="crew-fact-name">XANAX <span class="crew-fact-tag btc">BTC</span></div>
+        <div class="crew-fact-text">Crashout. Risk taker. BTC maxi. Named Xanax for the opposite reason. Will send it on a 50x and then post "who's still holding" at 3am. We love him anyway.</div>
+      </div>
+    </div>
+    </div>
+  </div>
+
   <main id="mainContent" class="w-full max-w-5xl mx-auto flex flex-col md:flex-row gap-6 md:gap-8 opacity-0 pointer-events-none transition-opacity duration-500 md:scale-[1.42] origin-center">
     <aside class="w-full md:w-52 flex flex-col gap-4 md:gap-5">
       <h2 class="text-zinc-500 text-[10px] font-semibold tracking-[0.25em] uppercase">crew</h2>
@@ -110,35 +377,40 @@
       </div>
     </aside>
 
-    <section class="flex-1 bg-zinc-900/70 border border-zinc-800/80 rounded-xl shadow-[0_0_40px_rgba(15,23,42,0.9)] p-5 md:p-6 flex flex-col gap-5">
+    <section class="flex-1 bg-[#070708] border border-zinc-800/90 rounded-xl shadow-[0_0_40px_rgba(0,0,0,0.6)] p-5 md:p-6 flex flex-col gap-5">
       <header class="flex items-center justify-between gap-4">
-        <div class="group cursor-pointer">
-          <p class="text-[10px] uppercase tracking-[0.25em] text-zinc-500 group-hover:text-zinc-300 transition-colors duration-200">dashboard</p>
-          <h2 class="text-base md:text-lg font-semibold tracking-[0.35em] text-zinc-100 mt-0.5 transform transition-transform transition-colors duration-200 ease-out group-hover:text-zinc-50 group-hover:-translate-y-0.5 group-hover:scale-[1.04] group-hover:drop-shadow-[0_0_18px_rgba(148,163,184,0.6)]">#S$EX</h2>
+        <div class="flex items-baseline gap-1.5">
+          <div class="group cursor-pointer flex flex-col">
+            <p class="text-[10px] uppercase tracking-[0.25em] text-zinc-500 group-hover:text-zinc-300 transition-colors duration-200">dashboard</p>
+            <h2 class="text-base md:text-lg font-semibold tracking-[0.35em] text-zinc-100 mt-0 transform transition-transform transition-colors duration-200 ease-out group-hover:text-zinc-50 group-hover:-translate-y-0.5 group-hover:scale-[1.04] group-hover:drop-shadow-[0_0_18px_rgba(148,163,184,0.6)]">#S$EX</h2>
+          </div>
+          <button type="button" id="dashboard-info-btn" class="dashboard-info-btn align-middle" aria-label="Crew info">Info</button>
         </div>
         <span class="px-2.5 py-0.5 rounded-full border border-emerald-500/70 bg-emerald-500/10 text-[10px] uppercase tracking-[0.2em] text-emerald-400">online</span>
       </header>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[12px] text-zinc-400">
-        <div class="rounded-lg bg-zinc-950/60 border border-zinc-800/80 p-4 flex flex-col gap-2">
-          <p class="text-[10px] uppercase tracking-[0.16em] text-zinc-500">now playing</p>
-          <p id="trackTitle" class="text-xs text-zinc-100">tonyhawk.mp3</p>
-          <div class="flex items-center gap-2 text-[10px] mt-1.5">
-            <button id="prevTrack" class="h-7 w-7 rounded-md border border-zinc-700/80 flex items-center justify-center text-[10px] text-zinc-300 hover:bg-zinc-800/80 hover:border-zinc-400 transition-colors" aria-label="Previous track">
-              &#9664;
-            </button>
-            <button id="playPause" class="h-7 w-7 rounded-md border border-zinc-500 bg-zinc-900 flex items-center justify-center text-xs text-zinc-100 hover:bg-zinc-800 hover:border-zinc-300 transition-colors" aria-label="Play or pause">
-              &#9658;
-            </button>
-            <button id="nextTrack" class="h-7 w-7 rounded-md border border-zinc-700/80 flex items-center justify-center text-[10px] text-zinc-300 hover:bg-zinc-800/80 hover:border-zinc-400 transition-colors" aria-label="Next track">
-              &#9654;
-            </button>
-            <button id="shuffleToggle" class="ml-1.5 px-2.5 h-7 rounded-full border border-zinc-700/80 flex items-center justify-center tracking-[0.16em] uppercase text-[9px] text-zinc-400 hover:bg-zinc-800/80 hover:border-zinc-400 transition-colors" aria-label="Shuffle">
-              rng
-            </button>
+        <div class="rounded-lg bg-[#030304] border border-zinc-800/80 p-4 flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <p class="text-[10px] uppercase tracking-[0.16em] text-zinc-500">now playing</p>
+            <span id="trackTime" class="text-[9px] tabular-nums text-zinc-500 uppercase tracking-wider">0:00 / 0:00</span>
+          </div>
+          <p id="trackTitle" class="text-sm text-zinc-100 truncate">tonyhawk.mp3</p>
+          <div class="progress-track cursor-pointer" id="progressTrack" aria-label="Seek">
+            <div class="progress-fill w-0" id="progressFill" style="width: 0%"></div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="prevTrack" class="player-btn h-7 w-7 rounded border border-zinc-600/80 flex items-center justify-center text-xs text-zinc-300 hover:bg-zinc-800/80 hover:border-zinc-500 bg-zinc-900/80" aria-label="Previous track">&#9664;</button>
+            <button id="playPause" class="player-btn h-7 w-7 rounded border border-zinc-500 flex items-center justify-center text-xs text-zinc-100 bg-zinc-800/90 hover:bg-zinc-700/90 hover:border-zinc-400" aria-label="Play or pause">&#9658;</button>
+            <button id="nextTrack" class="player-btn h-7 w-7 rounded border border-zinc-600/80 flex items-center justify-center text-xs text-zinc-300 hover:bg-zinc-800/80 hover:border-zinc-500 bg-zinc-900/80" aria-label="Next track">&#9654;</button>
+            <button id="shuffleToggle" class="player-btn ml-0.5 px-2.5 h-7 rounded-full border border-zinc-600/80 flex items-center justify-center tracking-[0.12em] uppercase text-[9px] text-zinc-400 hover:bg-zinc-800/80 hover:border-zinc-500 bg-zinc-900/60" aria-label="Shuffle">rng</button>
+            <div class="ml-auto flex items-center gap-2 flex-1 min-w-0 max-w-[100px]">
+              <span class="text-[9px] text-zinc-500 uppercase tracking-wider shrink-0" aria-hidden="true">vol</span>
+              <input type="range" id="volumeSlider" class="volume-slider flex-1 min-w-0" min="0" max="100" value="100" aria-label="Volume" />
+            </div>
           </div>
         </div>
-        <div class="rounded-lg bg-zinc-950/60 border border-zinc-800/80 p-4 flex flex-col gap-2">
+        <div class="rounded-lg bg-[#030304] border border-zinc-800/80 p-4 flex flex-col gap-2">
           <p class="text-[10px] uppercase tracking-[0.16em] text-zinc-500">crew</p>
           <ul class="space-y-1 text-zinc-300 text-xs">
             <li>
@@ -169,25 +441,32 @@
         </div>
       </div>
 
-      <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-2 text-[10px] text-zinc-400">
-        <div class="flex items-center justify-between rounded-md border border-zinc-800/80 bg-zinc-950/60 px-2.5 py-1.5 transform transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-zinc-600/80">
-          <div class="flex items-center gap-1.5">
-            <img src="media/eth.png" alt="ETH" class="w-3.5 h-3.5" />
-            <span class="tracking-[0.16em] uppercase text-zinc-300">eth</span>
+      <div class="mt-3 grid grid-cols-2 md:grid-cols-4 gap-1.5 text-[9px] text-zinc-400">
+        <div class="flex items-center justify-between rounded border border-zinc-800/80 bg-[#030304] px-2 py-1 transform transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-zinc-600/80">
+          <div class="flex items-center gap-1">
+            <img src="media/bitcoin.png" alt="BTC" class="w-3 h-3" />
+            <span class="tracking-[0.12em] uppercase text-zinc-300">btc</span>
+          </div>
+          <span id="priceBtc">$--</span>
+        </div>
+        <div class="flex items-center justify-between rounded border border-zinc-800/80 bg-[#030304] px-2 py-1 transform transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-zinc-600/80">
+          <div class="flex items-center gap-1">
+            <img src="media/eth.png" alt="ETH" class="w-3 h-3" />
+            <span class="tracking-[0.12em] uppercase text-zinc-300">eth</span>
           </div>
           <span id="priceEth">$--</span>
         </div>
-        <div class="flex items-center justify-between rounded-md border border-zinc-800/80 bg-zinc-950/60 px-2.5 py-1.5 transform transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-zinc-600/80">
-          <div class="flex items-center gap-1.5">
-            <img src="media/xmr.png" alt="XMR" class="w-3.5 h-3.5" />
-            <span class="tracking-[0.16em] uppercase text-zinc-300">xmr</span>
+        <div class="flex items-center justify-between rounded border border-zinc-800/80 bg-[#030304] px-2 py-1 transform transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-zinc-600/80">
+          <div class="flex items-center gap-1">
+            <img src="media/xmr.png" alt="XMR" class="w-3 h-3" />
+            <span class="tracking-[0.12em] uppercase text-zinc-300">xmr</span>
           </div>
           <span id="priceXmr">$--</span>
         </div>
-        <div class="flex items-center justify-between rounded-md border border-zinc-800/80 bg-zinc-950/60 px-2.5 py-1.5 transform transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-zinc-600/80">
-          <div class="flex items-center gap-1.5">
-            <img src="media/sol.png" alt="SOL" class="w-3.5 h-3.5" />
-            <span class="tracking-[0.16em] uppercase text-zinc-300">sol</span>
+        <div class="flex items-center justify-between rounded border border-zinc-800/80 bg-[#030304] px-2 py-1 transform transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-zinc-600/80">
+          <div class="flex items-center gap-1">
+            <img src="media/sol.png" alt="SOL" class="w-3 h-3" />
+            <span class="tracking-[0.12em] uppercase text-zinc-300">sol</span>
           </div>
           <span id="priceSol">$--</span>
         </div>
@@ -208,6 +487,11 @@
       var btnPlay = document.getElementById('playPause');
       var btnNext = document.getElementById('nextTrack');
       var btnShuffle = document.getElementById('shuffleToggle');
+      var progressTrack = document.getElementById('progressTrack');
+      var progressFill = document.getElementById('progressFill');
+      var trackTimeEl = document.getElementById('trackTime');
+      var volumeSlider = document.getElementById('volumeSlider');
+      var priceBtc = document.getElementById('priceBtc');
       var priceEth = document.getElementById('priceEth');
       var priceXmr = document.getElementById('priceXmr');
       var priceSol = document.getElementById('priceSol');
@@ -233,6 +517,27 @@
         currentIndex = (index + tracks.length) % tracks.length;
         audio.src = tracks[currentIndex].src;
         if (titleEl) titleEl.textContent = tracks[currentIndex].name;
+        if (progressFill) progressFill.style.width = '0%';
+        if (trackTimeEl) trackTimeEl.textContent = '0:00 / 0:00';
+      }
+
+      function formatTime(seconds) {
+        if (!isFinite(seconds) || isNaN(seconds)) return '0:00';
+        var m = Math.floor(seconds / 60);
+        var s = Math.floor(seconds % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+      }
+
+      function updateProgress() {
+        if (!audio || !progressFill || !trackTimeEl) return;
+        var t = audio.currentTime;
+        var d = audio.duration;
+        if (d > 0) {
+          progressFill.style.width = (100 * t / d) + '%';
+          trackTimeEl.textContent = formatTime(t) + ' / ' + formatTime(d);
+        } else {
+          trackTimeEl.textContent = formatTime(t) + ' / 0:00';
+        }
       }
 
       function updatePlayIcon() {
@@ -319,6 +624,43 @@
         });
       }
 
+      if (progressTrack && audio) {
+        progressTrack.addEventListener('click', function (e) {
+          var rect = progressTrack.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var pct = Math.max(0, Math.min(1, x / rect.width));
+          if (audio.duration && isFinite(audio.duration)) {
+            audio.currentTime = pct * audio.duration;
+            updateProgress();
+          }
+        });
+      }
+
+      if (audio) {
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('loadedmetadata', updateProgress);
+        audio.addEventListener('durationchange', updateProgress);
+      }
+
+      if (volumeSlider && audio) {
+        var savedVol = null;
+        try { savedVol = localStorage.getItem('ssex_volume'); } catch (err) {}
+        if (savedVol != null) {
+          var v = parseFloat(savedVol);
+          if (!isNaN(v) && v >= 0 && v <= 1) {
+            volumeSlider.value = Math.round(v * 100);
+            audio.volume = v;
+          }
+        } else {
+          audio.volume = 1;
+        }
+        volumeSlider.addEventListener('input', function () {
+          var v = parseInt(volumeSlider.value, 10) / 100;
+          audio.volume = v;
+          try { localStorage.setItem('ssex_volume', v); } catch (err) {}
+        });
+      }
+
       // fetch live prices (initial + live updates)
       function setPrice(el, value) {
         if (!el) return;
@@ -336,10 +678,13 @@
       }
 
       function fetchPrices() {
-        if (!(priceEth || priceXmr || priceSol)) return;
-        fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum,monero,solana&vs_currencies=usd')
+        if (!(priceBtc || priceEth || priceXmr || priceSol)) return;
+        fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,monero,solana&vs_currencies=usd')
           .then(function (res) { return res.json(); })
           .then(function (data) {
+            if (priceBtc && data.bitcoin && data.bitcoin.usd != null) {
+              setPrice(priceBtc, data.bitcoin.usd);
+            }
             if (priceEth && data.ethereum && data.ethereum.usd != null) {
               setPrice(priceEth, data.ethereum.usd);
             }
@@ -364,7 +709,6 @@
         });
       }
 
-   
       if (enterButton) {
         enterButton.addEventListener('click', function () {
           if (intro) {
@@ -373,14 +717,53 @@
               intro.style.display = 'none';
             }, 400);
           }
-
+          document.body.classList.add('taskbar-visible');
           if (main) {
             main.classList.remove('opacity-0', 'pointer-events-none');
           }
-
           playCurrent();
         });
       }
+
+      var crewFactsPanel = document.getElementById('crew-facts-panel');
+      var crewFactsClose = document.getElementById('crew-facts-close');
+      var crewFactsCard = document.querySelector('#crew-facts-panel .crew-facts-card');
+      function closeCrewFacts() {
+        if (crewFactsCard) crewFactsCard.classList.remove('ready');
+        if (crewFactsPanel) {
+          crewFactsPanel.classList.remove('open');
+          crewFactsPanel.setAttribute('aria-hidden', 'true');
+        }
+        document.body.classList.remove('info-overlay-open');
+      }
+      function openCrewFacts() {
+        if (crewFactsPanel) {
+          crewFactsPanel.classList.add('open');
+          crewFactsPanel.setAttribute('aria-hidden', 'false');
+        }
+        document.body.classList.add('info-overlay-open');
+        if (crewFactsCard) {
+          crewFactsCard.classList.remove('ready');
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () { crewFactsCard.classList.add('ready'); });
+          });
+        }
+      }
+      function toggleCrewFacts(e) {
+        if (e) e.stopPropagation();
+        if (crewFactsPanel.classList.contains('open')) closeCrewFacts();
+        else openCrewFacts();
+      }
+      var dashboardInfoBtn = document.getElementById('dashboard-info-btn');
+      if (dashboardInfoBtn && crewFactsPanel) dashboardInfoBtn.addEventListener('click', toggleCrewFacts);
+      if (crewFactsClose) crewFactsClose.addEventListener('click', closeCrewFacts);
+      document.addEventListener('click', function (e) {
+        if (!crewFactsPanel || !crewFactsPanel.classList.contains('open')) return;
+        var card = crewFactsPanel.querySelector('.crew-facts-card');
+        if ((!card || !card.contains(e.target)) && e.target !== dashboardInfoBtn) {
+          closeCrewFacts();
+        }
+      });
 
      
       var cur = document.getElementById('custom-cursor');
@@ -388,12 +771,16 @@
       var lastTrail = 0;
       var trailThrottle = 8;
 
+      var desktopGlow = document.getElementById('desktop-glow');
       document.addEventListener('mousemove', function (e) {
         if (cur) {
           cur.style.left = e.clientX - 20 + 'px';
           cur.style.top = e.clientY - 20 + 'px';
         }
-
+        if (desktopGlow && document.body.classList.contains('taskbar-visible')) {
+          desktopGlow.style.setProperty('--mouse-x', e.clientX + 'px');
+          desktopGlow.style.setProperty('--mouse-y', e.clientY + 'px');
+        }
         var now = Date.now();
         if (now - lastTrail < trailThrottle) return;
         lastTrail = now;

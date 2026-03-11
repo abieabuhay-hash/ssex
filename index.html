@@ -123,13 +123,9 @@
     .player-btn:active {
       transform: scale(0.98);
     }
-    /* Linux desktop: wallpaper when dashboard is visible */
+    /* Linux desktop: video wallpaper when dashboard is visible */
     body.taskbar-visible {
-      background: #1e1e2e;
-      background-image: url('media/9DdOYPd-ubuntu-dark-wallpaper.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      background: #000;
     }
     body.taskbar-visible::before {
       content: '';
@@ -139,7 +135,7 @@
       pointer-events: none;
       z-index: 0;
     }
-    body.taskbar-visible > main { position: relative; z-index: 2; }
+    body.taskbar-visible > #mainWrap { position: relative; z-index: 2; }
 
     /* Cursor-following glow on desktop background */
     #desktop-glow {
@@ -158,6 +154,19 @@
     }
     body.taskbar-visible #desktop-glow { display: block; }
 
+    /* Fullscreen background video (muted) */
+    #bg-video {
+      display: none;
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
+      filter: brightness(0.28);
+    }
+    body.taskbar-visible #bg-video { display: block; }
     .dashboard-info-btn {
       display: inline-flex;
       align-items: center;
@@ -183,7 +192,7 @@
     }
 
     /* Crew info overlay: when open, hide dashboard and show panel centered */
-    body.info-overlay-open main#mainContent {
+    body.info-overlay-open #mainWrap {
       opacity: 0;
       pointer-events: none;
     }
@@ -309,6 +318,7 @@
 <body class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 text-zinc-100 bg-[#050506] font-['Minecraft',sans-serif]">
   <div id="custom-cursor" aria-hidden="true"></div>
   <div id="cursor-trail" aria-hidden="true"></div>
+  <video id="bg-video" src="media/Nettspend (Feat. NBA Youngboy) - masked up (official video).mp4" muted loop playsinline></video>
   <div id="intro" class="fixed inset-0 flex flex-col items-center justify-center bg-[#050506] text-zinc-100 z-[10000]">
     <img src="media/SEEX.png" alt="SSEX" class="w-72 md:w-96 h-auto mb-6" />
     <h1 class="text-4xl md:text-6xl font-bold tracking-[0.35em] mb-4 ssex-floating">#S$EX</h1>
@@ -335,8 +345,8 @@
         <div class="crew-fact-text">Obsessed with watches. Can't afford one yet. His SOL bags are the down payment on a Rolex. Says "slade" instead of "smooth" and we still don't get it. One day.</div>
       </div>
       <div class="crew-fact-item">
-        <div class="crew-fact-name">ENEMY <span class="crew-fact-tag xmr">XMR</span></div>
-        <div class="crew-fact-text">XMR maxi. Privacy is a human right; his search history is a national secret. Called Enemy because he disagreed with someone. Once. In 2019.</div>
+        <div class="crew-fact-name">BIEBER <span class="crew-fact-tag xmr">XMR</span></div>
+        <div class="crew-fact-text">XMR maxi. Privacy is a human right; his search history is a national secret. Everyone still calls him Bieber even when he tries to rebrand. Once argued with a mod in 2019 and never lived it down.</div>
       </div>
       <div class="crew-fact-item">
         <div class="crew-fact-name">XANAX <span class="crew-fact-tag btc">BTC</span></div>
@@ -346,7 +356,9 @@
     </div>
   </div>
 
-  <main id="mainContent" class="w-full max-w-5xl mx-auto flex flex-col md:flex-row gap-6 md:gap-8 opacity-0 pointer-events-none transition-opacity duration-500 md:scale-[1.42] origin-center">
+  <div id="mainWrap" class="w-full max-w-5xl mx-auto flex flex-col gap-4 opacity-0 pointer-events-none transition-opacity duration-500 md:scale-[1.42] origin-center">
+  <main id="mainContent" class="flex flex-col gap-4">
+    <div class="flex flex-col md:flex-row gap-6 md:gap-8">
     <aside class="w-full md:w-52 flex flex-col gap-4 md:gap-5">
       <h2 class="text-zinc-500 text-[10px] font-semibold tracking-[0.25em] uppercase">crew</h2>
       <div class="flex flex-col gap-3">
@@ -364,9 +376,9 @@
         </a>
         <a href="https://t.me/memory706" target="_blank" rel="noopener noreferrer" class="member-link flex items-center gap-3 group">
           <div class="member-avatar w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-zinc-500/50 bg-zinc-900 ring-2 ring-transparent group-hover:ring-slate-300/60">
-            <img src="media/enemy.jpg" alt="ENEMY" class="w-full h-full object-cover" />
+            <img src="media/enemy.jpg" alt="BIEBER" class="w-full h-full object-cover" />
           </div>
-          <span class="member-name text-zinc-300 text-xs font-semibold tracking-wide transition-colors"><span class="text-red-500">E</span>NEMY</span>
+          <span class="member-name text-zinc-300 text-xs font-semibold tracking-wide transition-colors"><span class="text-red-500">B</span>IEBER</span>
         </a>
         <a href="https://t.me/supernigga67" target="_blank" rel="noopener noreferrer" class="member-link flex items-center gap-3 group">
           <div class="member-avatar w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-zinc-500/50 bg-zinc-900 ring-2 ring-transparent group-hover:ring-slate-300/60">
@@ -427,7 +439,7 @@
             </li>
             <li>
               <a href="https://t.me/memory706" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center group cursor-pointer transform transition-transform duration-150 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.02]">
-                <span class="group-hover:text-zinc-50 transition-colors"><span class="text-red-500">E</span>NEMY</span>
+                <span class="group-hover:text-zinc-50 transition-colors"><span class="text-red-500">B</span>IEBER</span>
                 <img src="media/xmr.png" alt="XMR" class="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
               </a>
             </li>
@@ -472,13 +484,15 @@
         </div>
       </div>
     </section>
+    </div>
   </main>
+  </div>
 
   <audio id="ssexTrack" src="media/tonyhawk.mp3"></audio>
 
   <script>
     (function () {
-      var main = document.getElementById('mainContent');
+      var main = document.getElementById('mainWrap');
       var intro = document.getElementById('intro');
       var enterButton = document.getElementById('enterButton');
       var audio = document.getElementById('ssexTrack');
@@ -495,8 +509,10 @@
       var priceEth = document.getElementById('priceEth');
       var priceXmr = document.getElementById('priceXmr');
       var priceSol = document.getElementById('priceSol');
+      var bgVideo = document.getElementById('bg-video');
 
       var tracks = [
+        { src: 'media/Paris Hilton.mp3',    name: 'Paris Hilton.mp3' },
         { src: 'media/tonyhawk.mp3',        name: 'tonyhawk.mp3' },
         { src: 'media/drankdrank.mp3',      name: 'drankdrank.mp3' },
         { src: 'media/EARDRUMMER.mp3',      name: 'EARDRUMMER.mp3' },
@@ -596,9 +612,8 @@
         playCurrent();
       }
 
-      
-      var startIndex = tracks.length ? Math.floor(Math.random() * tracks.length) : 0;
-      loadTrack(startIndex);
+      // Always start on the first track (Paris Hilton)
+      loadTrack(0);
       updatePlayIcon();
 
       if (btnPlay) {
@@ -728,6 +743,13 @@
             }, 400);
           }
           document.body.classList.add('taskbar-visible');
+          if (bgVideo) {
+            bgVideo.muted = true;
+            var p = bgVideo.play && bgVideo.play();
+            if (p && typeof p.catch === 'function') {
+              p.catch(function () { /* ignore autoplay errors */ });
+            }
+          }
           if (main) {
             main.classList.remove('opacity-0', 'pointer-events-none');
           }
